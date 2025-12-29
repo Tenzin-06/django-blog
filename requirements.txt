@@ -1,0 +1,9 @@
+asgiref==3.8.1
+backports.zoneinfo==0.2.1
+crispy-bootstrap4==2025.6
+Django==4.2.27
+django-crispy-forms==2.4
+pillow==10.4.0
+sqlparse==0.5.5
+typing_extensions==4.13.2
+tzdata==2025.3
