@@ -22,7 +22,42 @@
                 <section class="mb-5">
                     <p class="fs-5 mb-4" style="font-weight: bold;">{{single_blog.short_description}}</p>
                     <p class="fs-5 mb-4">{{single_blog.blog_body}}</p>
-                    </section>
+
+                    <!-- comments -->
+                    <h4>Comments ({{comment_count}})</h4>
+                    {% if comments %}
+                        {% for comment in comments %}
+                        <div class="card mt-1">
+                            <div class="card-body">
+                                <span>
+                                    <small style="font-weight: bold;">{{comment.user}}</small>
+                                    <small>| {{comment.created_at | timesince}} ago</small>
+                                </span>
+                                <p class="card-text mt-0">{{comment}}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                    no comments
+                    {% endif %}
+                    <br>
+
+                    <div class="form-group">
+                        {% if user.is_authenticated %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="comment">Add a Comment:</label>
+                                <textarea class="form-control" placeholder="Write your comment." name="comment" rows="3" required></textarea>
+                                <br>
+                                <button type="submit" class="btn btn-warning">Submit</button>
+                            </div>
+                        </form>
+                        {% else %}
+                        <p>Please <span><a href="{% url 'login' %}">login</a></span> to add a comment.</p>
+                        {% endif %}
+                    </div>
+                </section>
             </article>
         </div>
         <!-- Side widgets-->
