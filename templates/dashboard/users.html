@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- load the sidebar -->
+    {% include 'dashboard/sidebar.html' %}
+
+    <!-- Right Main Content -->
+    <div class="col-md-9">
+        {% if perms.auth.view_user %}
+        <h4>All Users</h4>
+        <a href="{% url 'add_user' %}" class="btn btn-dark text-light float-right mb-2">Add New</a>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>Staff</th>
+                <th>Superuser</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{user.first_name}} {{user.last_name}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{% if user.is_active %}<i class="fas fa-check text-success"></i>{% else %}<i class="fa-solid fa-xmark text-danger"></i>{% endif %}</td>
+                    <td>{% if user.is_staff %}<i class="fas fa-check text-success"></i>{% else %}<i class="fa-solid fa-xmark text-danger"></i>{% endif %}</td>
+                    <td>{% if user.is_superuser %}<i class="fas fa-check text-success"></i>{% else %}<i class="fa-solid fa-xmark text-danger"></i>{% endif %}</td>
+                    <td>
+                        <a href="{% url 'edit_user' user.id %}"><i class="fas fa-edit text-success"></i></a>
+                        &nbsp;
+                        <a href="{% url 'delete_user' user.id %}"><i class="fas fa-trash text-danger"></i></a>
+                    </td>
+                </tr> 
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <h4>You do not have permission to view this page.</h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
